@@ -1,7 +1,7 @@
 const express = require('express');
 const drinksRouter = require('./router/drinks');
 const testsRouter = require("./router/testRoute")
-// require('./config/mongo');
+require('./config/mongo');
 
 const client = express();
 

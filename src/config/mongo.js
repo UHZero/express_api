@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
+const { getMongoUri } = require("../config/utils/getMongoUri")
 
-const mongoUri = process.env.MONGO_URI || "mongouri";
+const mongoUri = getMongoUri();
 
 mongoose.connect(mongoUri);

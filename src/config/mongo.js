@@ -1,3 +1,5 @@
 const mongoose = require('mongoose');
+const { getMongoUri } = require('./utils/getMongoUri');
 
-mongoose.connect('mongodb+srv://UHZero:SenhaSenha@cluster0.raa65.mongodb.net/test');
+const mongoURI = getMongoUri();
+mongoose.connect(mongoURI);

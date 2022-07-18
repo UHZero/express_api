@@ -1,4 +1,5 @@
 const DrinkModel = require('../models/DrinkModel');
+const DrinkRepository = require("../repositories/DrinkRepository")
 
 class DrinkController {
   static get(req, res) {
@@ -11,7 +12,7 @@ class DrinkController {
       };
     }
 
-    DrinkModel.find(filters).sort([['name', sort]]).then((response) => {
+    DrinkRepository.getFilteredDrinks(filters, sort).then((response) => {
       res.json(response);
     });
   }

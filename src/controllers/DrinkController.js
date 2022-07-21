@@ -1,4 +1,5 @@
 const DrinkModel = require('../models/DrinkModel');
+const DrinkRepository = require('../repository/drinkRepository');
 
 class DrinkController {
   static get(req, res) {
@@ -11,7 +12,7 @@ class DrinkController {
       };
     }
 
-    DrinkModel.find(filters).sort([['name', sort]]).then((response) => {
+    DrinkRepository.getFilteredDrinks(filters, sort).then((response) => {
       res.json(response);
     });
   }
@@ -19,25 +20,13 @@ class DrinkController {
   static filter(req, res) {
     const { id } = req.params;
 
-    DrinkModel.findOne({
-      _id: id,
-    }).then((drink) => {
-      res.json(drink);
-    });
+    DrinkRepository.getOneDrink(id).then((response) => res.json(response));
   }
 
   static post(req, res) {
     const { name, price, available } = req.body;
 
-    const drink = new DrinkModel({
-      name,
-      price,
-      available,
-    });
-
-    drink.save().then((response) => {
-      res.json(response);
-    });
+    DrinkRepository.postDrink(name, price, available).then((response) => res.json(response));
   }
 
   static put(req, res) {

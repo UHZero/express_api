@@ -1,5 +1,5 @@
 const DrinkModel = require('../models/DrinkModel');
-const DrinkRepository = require('../repository/drinkRepository');
+const { DrinkRepository } = require('../repository/drinkRepository');
 
 class DrinkController {
   static get(req, res) {
@@ -19,8 +19,14 @@ class DrinkController {
 
   static filter(req, res) {
     const { id } = req.params;
+    const filters = {};
+    if (id) {
+      filters._id = {
+        $eq: id,
+      };
+    }
 
-    DrinkRepository.getOneDrink(id).then((response) => res.json(response));
+    DrinkRepository.getOneDrink(filters).then((response) => res.json(response));
   }
 
   static post(req, res) {
@@ -30,16 +36,10 @@ class DrinkController {
   }
 
   static put(req, res) {
+    const { name, price, available } = req.body;
     const { id } = req.params;
 
-    DrinkModel.findOneAndUpdate(
-      { _id: id },
-      req.body,
-      {
-        new: true,
-        overwrite: true,
-      },
-    ).then((updatedDrink) => res.json(updatedDrink));
+    DrinkRepository.putDrink(id, name, price, available).then((response) => res.json(response));
   }
 
   static patch(req, res) {

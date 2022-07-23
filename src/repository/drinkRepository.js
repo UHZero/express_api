@@ -10,15 +10,33 @@ class DrinkRepository {
     }
 
     static async postDrink(name, price, available) {
-        this.name = name;
-        this.price = price;
-        this.available = available;
         const drink = new DrinkModel({
             name,
             price,
             available,
         });
         return await drink.save().then((response) => response);
+    }
+
+    static async putDrink(id, name, price, available) {
+        const filters = {};
+        if (id) {
+            filters._id = {
+                $eq: id,
+            };
+        }
+        return await DrinkModel.findOneAndUpdate(
+            id,
+            {
+                name,
+                price,
+                available,
+            },
+            {
+                new: true,
+                overwrite: true,
+            },
+        ).then((response) => response);
     }
 }
 

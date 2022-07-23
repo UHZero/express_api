@@ -19,14 +19,8 @@ class DrinkController {
 
   static filter(req, res) {
     const { id } = req.params;
-    const filters = {};
-    if (id) {
-      filters._id = {
-        $eq: id,
-      };
-    }
 
-    DrinkRepository.getOneDrink(filters).then((response) => res.json(response));
+    DrinkRepository.getOneDrink(id).then((response) => res.json(response));
   }
 
   static post(req, res) {
@@ -43,27 +37,16 @@ class DrinkController {
   }
 
   static patch(req, res) {
+    const { name, price, available } = req.body;
     const { id } = req.params;
 
-    DrinkModel.findOneAndUpdate(
-      { _id: id },
-      req.body,
-      {
-        new: true,
-      },
-    ).then((updatedUser) => res.json(updatedUser));
+    DrinkRepository.patchDrink(id, name, price, available).then((response) => res.json(response));
   }
 
   static delete(req, res) {
     const { id } = req.params;
 
-    DrinkModel.findOneAndUpdate({ _id: id }, {
-      $set: {
-        available: false,
-      },
-    }, {
-      upsert: true,
-    }).then((availableDrink) => res.json(availableDrink));
+    DrinkRepository.softdeleteDrink(id).then((response) => res.json(response));
   }
 }
 

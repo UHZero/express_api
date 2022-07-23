@@ -6,7 +6,13 @@ class DrinkRepository {
     }
 
     static async getOneDrink(id) {
-        return await DrinkModel.findOne(id).then((response) => response);
+        const filters = {};
+        if (id) {
+            filters._id = {
+                $eq: id,
+            };
+        }
+        return await DrinkModel.findOne(filters).then((response) => response);
     }
 
     static async postDrink(name, price, available) {
@@ -37,6 +43,30 @@ class DrinkRepository {
                 overwrite: true,
             },
         ).then((response) => response);
+    }
+
+    static async patchDrink(id, name, price, available) {
+        return await DrinkModel.findOneAndUpdate(
+            { _id: id },
+            {
+                name,
+                price,
+                available,
+            },
+            {
+                new: true,
+            },
+        ).then((response) => response);
+    }
+
+    static async softdeleteDrink(id) {
+        return await DrinkModel.findOneAndUpdate({ _id: id }, {
+            $set: {
+                available: false,
+            },
+        }, {
+            upsert: false,
+        }).then((response) => response);
     }
 }
 

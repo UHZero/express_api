@@ -15,7 +15,7 @@ class DrinkRepository {
         return await DrinkModel.findOne(filters).then((response) => response);
     }
 
-    static async postDrink(name, price, available) {
+    static async createDrink(name, price, available) {
         const drink = new DrinkModel({
             name,
             price,
@@ -24,7 +24,7 @@ class DrinkRepository {
         return await drink.save().then((response) => response);
     }
 
-    static async putDrink(id, name, price, available) {
+    static async updateDrink(id, name, price, available) {
         const filters = {};
         if (id) {
             filters._id = {
@@ -45,7 +45,7 @@ class DrinkRepository {
         ).then((response) => response);
     }
 
-    static async patchDrink(id, name, price, available) {
+    static async updatePropertyDrink(id, name, price, available) {
         return await DrinkModel.findOneAndUpdate(
             { _id: id },
             {

@@ -26,21 +26,21 @@ class DrinkController {
   static post(req, res) {
     const { name, price, available } = req.body;
 
-    DrinkRepository.postDrink(name, price, available).then((response) => res.json(response));
+    DrinkRepository.createDrink(name, price, available).then((response) => res.json(response));
   }
 
   static put(req, res) {
     const { name, price, available } = req.body;
     const { id } = req.params;
 
-    DrinkRepository.putDrink(id, name, price, available).then((response) => res.json(response));
+    DrinkRepository.updateDrink(id, name, price, available).then((response) => res.json(response));
   }
 
   static patch(req, res) {
     const { name, price, available } = req.body;
     const { id } = req.params;
 
-    DrinkRepository.patchDrink(id, name, price, available).then((response) => res.json(response));
+    DrinkRepository.updatePropertyDrink(id, name, price, available).then((response) => res.json(response));
   }
 
   static delete(req, res) {

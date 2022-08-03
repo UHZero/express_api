@@ -1,5 +1,5 @@
 const DrinkModel = require('../models/DrinkModel');
-const { DrinkRepository } = require('../repository/drinkRepository');
+const { drinkRepository } = require('../repository/drinkRepository');
 
 class DrinkController {
   static get(req, res) {
@@ -12,7 +12,7 @@ class DrinkController {
       };
     }
 
-    DrinkRepository.getFilteredDrinks(filters, sort).then((response) => {
+    drinkRepository.getFilteredDrinks(filters, sort).then((response) => {
       res.json(response);
     });
   }
@@ -20,33 +20,33 @@ class DrinkController {
   static filter(req, res) {
     const { id } = req.params;
 
-    DrinkRepository.getOneDrink(id).then((response) => res.json(response));
+    drinkRepository.getOneDrink(id).then((response) => res.json(response));
   }
 
   static post(req, res) {
     const { name, price, available } = req.body;
 
-    DrinkRepository.createDrink(name, price, available).then((response) => res.json(response));
+    drinkRepository.createDrink(name, price, available).then((response) => res.json(response));
   }
 
   static put(req, res) {
     const { name, price, available } = req.body;
     const { id } = req.params;
 
-    DrinkRepository.updateDrink(id, name, price, available).then((response) => res.json(response));
+    drinkRepository.updateDrink(id, name, price, available).then((response) => res.json(response));
   }
 
   static patch(req, res) {
     const { name, price, available } = req.body;
     const { id } = req.params;
 
-    DrinkRepository.updatePropertyDrink(id, name, price, available).then((response) => res.json(response));
+    drinkRepository.updatePropertyDrink(id, name, price, available).then((response) => res.json(response));
   }
 
   static delete(req, res) {
     const { id } = req.params;
 
-    DrinkRepository.softdeleteDrink(id).then((response) => res.json(response));
+    drinkRepository.softdeleteDrink(id).then((response) => res.json(response));
   }
 }
 

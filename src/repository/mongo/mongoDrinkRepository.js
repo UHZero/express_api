@@ -1,4 +1,4 @@
-const DrinkModel = require('../models/DrinkModel');
+const DrinkModel = require('../../models/DrinkModel');
 
 class mongoDrinkRepository {
     static async getFilteredDrinks(filters, sort) {

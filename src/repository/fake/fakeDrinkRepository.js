@@ -8,11 +8,11 @@ const database = [{
 }];
 
 const fakeDrinkRepository = {
-    getFilteredDrinks: (filters, sort) => database,
+    getFilteredDrinks: async (filters, sort) => database,
 
-    getOneDrink: (id) => database.find((item) => item._id === id),
+    getOneDrink: async (id) => database.find((item) => item._id === id),
 
-    createDrink: (name, price, available) => {
+    createDrink: async (name, price, available) => {
         const _id = crypto.randomBytes(16).toString('hex');
         const newDrink = {
             _id, name, price, available,
@@ -22,18 +22,19 @@ const fakeDrinkRepository = {
         return newDrink;
     },
 
-    updateDrink: (id, name, price, available) => {
+    updateDrink: async (id, name, price, available) => {
         for (item in database) {
-            if (database[item]._id === id) {
-                database[item].name = name;
-                database[item].price = price;
-                database[item].available = available;
+            const dataItem = database[item];
+            if (dataItem._id === id) {
+                dataItem.name = name;
+                dataItem.price = price;
+                dataItem.available = available;
             }
-            return database[item];
+            return dataItem;
         }
     },
 
-    updatePropertyDrink: (id, param) => {
+    updatePropertyDrink: async (id, param) => {
         database.forEach((item) => {
             if (item._id === id && typeof param === 'string') {
                 item.name = param;
@@ -46,7 +47,7 @@ const fakeDrinkRepository = {
         return database.find((item) => item._id === id);
     },
 
-    softdeleteDrink: (id) => {
+    softdeleteDrink: async (id) => {
         for (item in database) {
             if (database[item]._id === id) {
                 if (database[item].available) {
@@ -61,7 +62,7 @@ const fakeDrinkRepository = {
 };
 const idTests = database[0]._id;
 
-console.log(fakeDrinkRepository.softdeleteDrink(idTests));
+// console.log(fakeDrinkRepository.softdeleteDrink(idTests));
 
 module.exports = {
     fakeDrinkRepository,
